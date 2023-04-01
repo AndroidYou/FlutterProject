@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterproject/home/HomeRoute.dart';
 import 'package:flutterproject/widget/GradientCircularProgressIndicator.dart';
 
 class SplashRoute extends StatefulWidget {
@@ -22,21 +22,21 @@ class _SplashRouteState extends State<SplashRoute> {
     // TODO: implement initState
     super.initState();
     timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
-      currentTimer ++;
-      if(currentTimer == 4){
+      currentTimer++;
+      if (currentTimer == 4) {
         timer.cancel();
-      }
-      setState(() {
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const HomeRoute()), (route) => false);
 
-      });
+      }
+      setState(() {});
     });
-    
   }
+
   @override
   void dispose() {
-   if(timer.isActive){
-     timer.cancel();
-   }
+    if (timer.isActive) {
+      timer.cancel();
+    }
     super.dispose();
   }
 
@@ -61,7 +61,14 @@ class _SplashRouteState extends State<SplashRoute> {
                 children: [
                   GradientCircularProgressIndicator(
                       radius: 20, value: currentTimer / 4),
-                  Text('$currentTimer',textDirection: TextDirection.ltr,style: const TextStyle(fontSize: 15,decoration: TextDecoration.none,color: Colors.amber),)
+                  Text(
+                    '$currentTimer',
+                    textDirection: TextDirection.ltr,
+                    style: const TextStyle(
+                        fontSize: 15,
+                        decoration: TextDecoration.none,
+                        color: Colors.amber),
+                  )
                 ],
               ))
         ],

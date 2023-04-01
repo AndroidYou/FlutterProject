@@ -3,16 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class GradientCircularProgressIndicator extends StatelessWidget {
-    const GradientCircularProgressIndicator({
-    this.strokeWidth = 1.0,
-    required this.radius,
-     this.colors =const [ Color(0x00ff00ff)],
-     this.stops =const[ 0.5],
-    this.strokeCapRound = false,
-    this.backgroundColor = const Color(0xFFEEEEEE),
-    this.totalAngle = 2 * pi,
-    required this.value
-  });
+  const GradientCircularProgressIndicator(
+      {Key? key, this.strokeWidth = 1.0,
+      required this.radius,
+      this.colors = const [Colors.indigo,Colors.blue],
+      this.stops = const [0.5,1.0],
+      this.strokeCapRound = false,
+      this.backgroundColor = const Color(0xFFEEEEEE),
+      this.totalAngle = 2 * pi,
+      required this.value}) : super(key: key);
 
   //粗细
   final double strokeWidth;
@@ -46,16 +45,13 @@ class GradientCircularProgressIndicator extends StatelessWidget {
     }
     var _colors = colors;
     if (_colors == null) {
-      Color color = Theme
-          .of(context)
-          .accentColor;
+      Color color = Theme.of(context).accentColor;
       _colors = [color, color];
     }
 
-
     return Transform.rotate(
       angle: -pi / 2.0 - _offset,
-      child:CustomPaint(
+      child: CustomPaint(
         size: Size.fromRadius(radius),
         painter: _GradientCircularProgressPainter(
           colors: _colors,
@@ -70,47 +66,46 @@ class GradientCircularProgressIndicator extends StatelessWidget {
     );
   }
 }
-class _GradientCircularProgressPainter extends CustomPainter{
-  _GradientCircularProgressPainter({
-    this.strokeWidth =4.0,
-    this.strokeCapRound =false,
-    this.backgroundColor  = const Color(0xFFEEEEEE),
-    required this.radius,
-    this.total =2*pi,
-    required this.colors,
-    required this.stops,
-    required this.value
-});
+
+class _GradientCircularProgressPainter extends CustomPainter {
+  _GradientCircularProgressPainter(
+      {this.strokeWidth = 4.0,
+      this.strokeCapRound = false,
+      this.backgroundColor = const Color(0xFFEEEEEE),
+      required this.radius,
+      this.total = 2 * pi,
+      required this.colors,
+      required this.stops,
+      required this.value});
   final double strokeWidth;
   final bool strokeCapRound;
   final double value;
   final Color backgroundColor;
-  final List<Color>colors;
+  final List<Color> colors;
   final double total;
   final double radius;
   final List<double> stops;
 
-
   @override
   void paint(Canvas canvas, Size size) {
     size = Size.fromRadius(radius);
-    double _offset = strokeWidth/2.0;
+    double _offset = strokeWidth / 2.0;
     double _value = value;
-    _value = _value.clamp(.0, 1.0)*total;
+    _value = _value.clamp(.0, 1.0) * total;
     double _start = .0;
 
-    if(strokeCapRound){
-      _start = asin(strokeWidth/ (size.width - strokeWidth));
+    if (strokeCapRound) {
+      _start = asin(strokeWidth / (size.width - strokeWidth));
     }
-    Rect rect = Offset(_offset, _offset) & Size(size.width-strokeWidth,
-        size.height -strokeWidth);
+    Rect rect = Offset(_offset, _offset) &
+        Size(size.width - strokeWidth, size.height - strokeWidth);
     var paint = Paint()
-    ..strokeCap = strokeCapRound?StrokeCap.round:StrokeCap.butt
-    ..style =PaintingStyle.stroke
-    ..isAntiAlias = true
-    ..strokeWidth =strokeWidth;
+      ..strokeCap = strokeCapRound ? StrokeCap.round : StrokeCap.butt
+      ..style = PaintingStyle.stroke
+      ..isAntiAlias = true
+      ..strokeWidth = strokeWidth;
 
-    if(backgroundColor!=Colors.transparent){
+    if (backgroundColor != Colors.transparent) {
       paint.color = backgroundColor;
       canvas.drawArc(rect, _start, total, false, paint);
     }
@@ -123,18 +118,10 @@ class _GradientCircularProgressPainter extends CustomPainter{
         stops: stops,
       ).createShader(rect);
 
-      canvas.drawArc(
-          rect,
-          _start,
-          _value,
-          false,
-          paint
-      );
+      canvas.drawArc(rect, _start, _value, false, paint);
     }
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) =>true;
-
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
-

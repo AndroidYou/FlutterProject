@@ -38,7 +38,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  json_annotation: ^4.8.0
+  json_serializable: ^6.6.1
+  build_runner: ^2.3.3
+  dio: ^5.1.1
+  flutter_swiper: ^1.1.6
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -58,7 +62,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - jsons/channel.json
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

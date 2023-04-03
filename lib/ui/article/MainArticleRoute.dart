@@ -57,16 +57,21 @@ class _MainArticleRoute extends State<MainArticleRoute>{
               itemCount:snapshot.data?.length??0,
               itemBuilder: (context,index){
                 var data = snapshot.data?.toList()[index];
-                return banner.length>0 && index ==0
-                Swiper(itemCount: banner.length,
-                itemBuilder: (BuildContext context,int index){
-                 Image.network(banner[index].url);
-                },
-                ) :
-                  ListTile(
-                  title: Text(data?.title??""),
-                  subtitle: Text(data?.chapterName??""),
-                );
+                if(banner.length>0 && index ==0){
+                  return
+                    Swiper(itemCount: banner.length,
+                      itemBuilder: (BuildContext context,int index){
+                       return Image.network(banner[index].url);
+                      },
+                    );
+                }else{
+                  return  ListTile(
+                    title: Text(data?.title??""),
+                    subtitle: Text(data?.chapterName??""),
+                  );
+                }
+
+
               },
               separatorBuilder: (BuildContext context, int index) {
               return  const SizedBox(height: 10,child: Divider(

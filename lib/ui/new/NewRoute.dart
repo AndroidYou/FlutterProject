@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterproject/model/NewsBean.dart';
+import 'package:flutterproject/entry/NewsBean.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class NewRoute extends StatefulWidget{
-  const NewRoute({Key? key,required this.type}) : super(key: key);
+  const NewRoute({Key? key, required this.type}) : super(key: key);
   final String type;
 
   @override
@@ -25,7 +25,8 @@ class _NewRouteState extends State<NewRoute> with AutomaticKeepAliveClientMixin 
       var result = await dio.get("/ClientNews?id=${widget
           .type}&pullNum=1&uid=864678036850608&action=default",
           queryParameters: queryParameters);
-      print("接口返回数据:${result.data}");
+      print("接口返回数据:/ClientNews?id=${widget
+          .type}&pullNum=1&uid=864678036850608&action=default");
       return getNewsBeanList(result.data).first;
     }
     return Center(

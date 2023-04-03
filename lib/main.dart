@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterproject/splash/SplashRoute.dart';
+import 'package:flutterproject/ui/splash/SplashRoute.dart';
 
 void main() {
   runApp(const MyApp());

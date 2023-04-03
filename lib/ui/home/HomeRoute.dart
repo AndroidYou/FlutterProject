@@ -2,8 +2,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutterproject/model/Channel.dart';
-import 'package:flutterproject/new/NewRoute.dart';
+import 'package:flutterproject/entry/Channel.dart';
+import 'package:flutterproject/ui/new/NewRoute.dart';
 
 class HomeRoute extends StatefulWidget {
   const HomeRoute({Key? key}) : super(key: key);

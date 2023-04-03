@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'NewsBean.g.dart';
+part '../entry/NewsBean.g.dart';
 
 
 List<NewsBean> getNewsBeanList(List<dynamic> list){

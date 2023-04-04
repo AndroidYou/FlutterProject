@@ -1,10 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutterproject/entry/ArticleList.dart';
-import 'package:flutterproject/entry/NewsBean.dart';
-import 'package:flutterproject/net/api_manager.dart';
-import 'package:http/http.dart';
+import 'package:flutterproject/view/LeftDrawer.dart';
 import '../article/MainArticleRoute.dart';
 
 class NewHomeRoute extends StatefulWidget{
@@ -12,7 +9,6 @@ class NewHomeRoute extends StatefulWidget{
 
   @override
   _NewHomeRoute createState() {
-    // TODO: implement createState
     return _NewHomeRoute();
   }
 }
@@ -26,6 +22,7 @@ class _NewHomeRoute extends State<NewHomeRoute>{
         title: const Text("玩Android"),
       ),
       body: const MainArticleRoute(),
+      drawer:const LeftDrawer(),
     );
   }
 

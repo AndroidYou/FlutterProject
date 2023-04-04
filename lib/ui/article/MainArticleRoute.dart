@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutterproject/entry/MainBanner.dart';
 import 'package:flutterproject/net/NetCode.dart';
+import 'package:flutterproject/ui/article/DetailArticleRoute.dart';
 import 'package:flutterproject/utlis/DateFormat.dart';
 
 import '../../entry/ArticleList.dart';
@@ -136,29 +137,35 @@ class _ArticleItem extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    return  ConstrainedBox(
-      constraints: const BoxConstraints(
-        minHeight: 120
+    return  GestureDetector(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+            minHeight: 120
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children:  [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:  [
+                const Padding(padding: EdgeInsets.all(10),child:Icon(Icons.person,color: Colors.blue,) ,),Padding(padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  child: Text(DateFormat.format(DateTime.parse(_bean.niceShareDate)),style: const TextStyle(fontSize: 12,color: Colors.black12),),)
+              ],),
+            Padding(padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),child: Text(_bean.title,style: const TextStyle(fontSize: 18),),),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(padding: const EdgeInsets.all(10),child:  Text(_bean.chapterName,style: const TextStyle(color: Colors.blue,fontSize: 14),),),
+                const Padding(padding: EdgeInsets.fromLTRB(0, 0, 10, 0),child:  Icon(Icons.heart_broken,color: Colors.red,),)
+              ],
+            )
+          ],
+        ),
+
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:  [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:  [
-            const Padding(padding: EdgeInsets.all(10),child:Icon(Icons.person,color: Colors.blue,) ,),Padding(padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                child: Text(DateFormat.format(DateTime.parse(_bean.niceShareDate)),style: const TextStyle(fontSize: 12,color: Colors.black12),),)
-          ],),
-          Padding(padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),child: Text(_bean.title,style: const TextStyle(fontSize: 18),),),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [ 
-              Padding(padding: const EdgeInsets.all(10),child:  Text(_bean.chapterName,style: const TextStyle(color: Colors.blue,fontSize: 14),),),
-             const Padding(padding: EdgeInsets.fromLTRB(0, 0, 10, 0),child:  Icon(Icons.heart_broken,color: Colors.red,),)
-            ],
-          )
-        ],
-      ),
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder:(context)=>DetailArticleRoute(url: _bean.link)));
+      },
     );
   }
 

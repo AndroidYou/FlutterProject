@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutterproject/ui/home/HomeRoute.dart';
 import 'package:flutterproject/view/GradientCircularProgressIndicator.dart';
 
 import '../home/NewHomeRoute.dart';

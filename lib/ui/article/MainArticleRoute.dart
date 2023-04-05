@@ -65,6 +65,9 @@ class _MainArticleRoute extends State<MainArticleRoute> {
                           child: Swiper(
                             itemCount: banner.length,
                             itemHeight: 200,
+                            onTap:(index) {
+                              Navigator.push(context, MaterialPageRoute(builder:(context)=>DetailArticleRoute(url: banner[index].url,title:banner[index].title)));
+                            },
                             itemBuilder: (BuildContext context, int index) {
                               return _BannerItem(banner[index]);
                             },
@@ -164,7 +167,7 @@ class _ArticleItem extends StatelessWidget{
 
       ),
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder:(context)=>DetailArticleRoute(url: _bean.link)));
+        Navigator.push(context, MaterialPageRoute(builder:(context)=>DetailArticleRoute(url: _bean.link,title: _bean.title)));
       },
     );
   }

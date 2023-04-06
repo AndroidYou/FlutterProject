@@ -1,11 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutterproject/entry/MainBanner.dart';
 import 'package:flutterproject/net/NetCode.dart';
 import 'package:flutterproject/ui/article/DetailArticleRoute.dart';
-import 'package:flutterproject/utlis/DateFormat.dart';
-
 import '../../entry/ArticleList.dart';
 import 'package:http/http.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -18,7 +15,7 @@ class MainArticleRoute extends StatefulWidget {
   State<StatefulWidget> createState() => _MainArticleRoute();
 }
 
-class _MainArticleRoute extends State<MainArticleRoute> {
+class _MainArticleRoute extends State<MainArticleRoute>with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     // TODO: implement initState
@@ -46,6 +43,7 @@ class _MainArticleRoute extends State<MainArticleRoute> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Center(
       child: FutureBuilder(
           future: _getArticles(),
@@ -96,6 +94,9 @@ class _MainArticleRoute extends State<MainArticleRoute> {
           }),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 ///banner item布局
 class _BannerItem extends StatelessWidget {
@@ -152,7 +153,7 @@ class _ArticleItem extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:  [
                 const Padding(padding: EdgeInsets.all(10),child:Icon(Icons.person,color: Colors.blue,) ,),Padding(padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                  child: Text(DateFormat.format(DateTime.parse(_bean.niceShareDate)),style: const TextStyle(fontSize: 12,color: Colors.black12),),)
+                  child: Text(_bean.niceShareDate,style: const TextStyle(fontSize: 12,color: Colors.black38),),)
               ],),
             Padding(padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),child: Text(_bean.title,style: const TextStyle(fontSize: 18),),),
             Row(

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutterproject/view/GradientCircularProgressIndicator.dart';
 
-import '../home/NewHomeRoute.dart';
+import '../home/HomeRoute.dart';
 
 class SplashRoute extends StatefulWidget {
   const SplashRoute({Key? key}) : super(key: key);

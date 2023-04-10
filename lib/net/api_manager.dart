@@ -7,14 +7,14 @@ class ApiManager{
 
 
 
-  static const String _mainArticleList = "$_baseUrl/article/list/0/json";
+  static const String _mainArticleList = "$_baseUrl/article/list/";
   static const String _mainBanner = "$_baseUrl/banner/json";
   static const String _mainKnowledge = "$_baseUrl/tree/json";
-  static const String _knowledgeList = "$_baseUrl/article/list/0/json?cid=";
+  static const String _knowledgeList = "$_baseUrl/article/list";
 
   /// 首页列表
-  static getMainArticleList() async{
-    return await _getData(_mainArticleList);
+  static getMainArticleList(int page) async{
+    return await _getData(_mainArticleList+"$page/json");
   }
   ///首页banner
   static getMainBanner() async{
@@ -25,8 +25,8 @@ class ApiManager{
     return await _getData(_mainKnowledge);
   }
   ///知识体系子列表
-  static getKnowledgeList(int cid) async{
-    return await _getData(_knowledgeList+"$cid");
+  static getKnowledgeList(int page,int cid) async{
+    return await _getData(_knowledgeList+"/$page/json?cid=$cid");
   }
 
 

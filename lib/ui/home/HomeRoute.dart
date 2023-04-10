@@ -55,6 +55,7 @@ class _NewHomeRoute extends State<NewHomeRoute>{
       },),
     );
   }
+  ///构建底部导航
   List<BottomNavigationBarItem> _initItems(){
     List<BottomNavigationBarItem> barItem =[];
     barItem.add( BottomNavigationBarItem(icon: const Icon(Icons.home),label:_titleList[0]));

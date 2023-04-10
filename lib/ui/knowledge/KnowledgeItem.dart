@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutterproject/entry/KnowledgeItemBean.dart';
+import 'package:flutterproject/net/NetCode.dart';
 import 'package:flutterproject/net/api_manager.dart';
 import 'package:flutterproject/utlis/DateFormat.dart';
 import 'package:http/http.dart';
 
 import '../article/DetailArticleRoute.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class KnowledgeItem extends StatefulWidget {
   const KnowledgeItem({Key? key, required this.cid}) : super(key: key);
@@ -20,35 +22,56 @@ class KnowledgeItem extends StatefulWidget {
 }
 
 class _KnowledgeItemState extends State<KnowledgeItem> with AutomaticKeepAliveClientMixin{
+  final RefreshController _controller = RefreshController(initialRefresh: false);
+  List<DatasBean> list = [];
+  int mPage = 0;
 
-  Future<List<DatasBean>> _getItemList() async{
-    print("获取数据1:${widget.cid}");
-   Response response = await ApiManager.getKnowledgeList(widget.cid);
-    print("获取数据:${response.statusCode}");
-    return KnowledgeItemBean.fromJson(jsonDecode(response.body)).data.datas;
+
+   _getItemList() async{
+   Response response = await ApiManager.getKnowledgeList(mPage,widget.cid);
+   if(response.statusCode == NetCode.succeed){
+    setState(() {
+      if(mPage == 0) list.clear();
+      list.addAll(KnowledgeItemBean.fromJson(jsonDecode(response.body)).data.datas);
+    });
+   }
+  }
+
+  _refreshData() async{
+    mPage = 0;
+     await _getItemList();
+     _controller.refreshCompleted();
+  }
+  _loadingMoreData() async {
+    mPage ++;
+    await _getItemList();
+    _controller.loadComplete();
   }
   @override
+  void initState() {
+   _getItemList();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Center(
-      child: FutureBuilder(
-        future: _getItemList(),
-          builder: (BuildContext context,
-          AsyncSnapshot<List<DatasBean>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return ListView.separated(itemBuilder: (context, index) {
-            return ItemView(datasBean: snapshot.data![index]);
+    super.build(context);
+    return SmartRefresher(
+      controller: _controller,
+      enablePullDown: true,
+      enablePullUp: true,
+      onRefresh: _refreshData,
+      onLoading: _loadingMoreData,
+      child:  ListView.separated(itemBuilder: (context, index) {
+        return ItemView(datasBean: list[index]);
+      },
+          separatorBuilder: (context, index) {
+            return const Divider(
+              color: Colors.white,
+              thickness: 10,
+            );
           },
-              separatorBuilder: (context, index) {
-                return const Divider(
-                  color: Colors.white,
-                  thickness: 10,
-                );
-              },
-              itemCount: snapshot.data!.length);
-        } else {
-          return const CircularProgressIndicator();
-        }
-      }),
+          itemCount: list.length),
     );
   }
 

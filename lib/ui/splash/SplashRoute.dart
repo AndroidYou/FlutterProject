@@ -56,7 +56,7 @@ class _SplashRouteState extends State<SplashRoute> {
           ),
           Positioned(
               right: 10,
-              top: 10,
+              top: 40,
               child: Stack(
                 alignment: Alignment.center,
                 children: [
